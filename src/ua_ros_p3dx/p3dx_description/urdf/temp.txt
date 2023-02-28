@@ -1,0 +1,29 @@
+	<link name="rplidar">
+		<inertial>            <!--Inertial valuse include origin, mass and inertias as per CAD model-->
+		<mass value="0.10441" />
+		<origin rpy="0 0 0" xyz="0 0 0" />
+		<inertia ixx="0.1000000042" ixy="0" ixz="0" iyy="0.1000000042" iyz="0" izz="0.1000000040" /> <!-- Taken at the output coordinate system-->
+		</inertial>
+		<collision>           <!-- Collision values include dimensions and origin-->
+		<origin rpy="0 0 0" xyz="0 0 0" />
+		<geometry>
+			<mesh filename="package://p3dx_description/meshes/rplidar.dae" scale="1 1 1"/>
+		</geometry>
+		</collision>
+		<visual>               <!-- Visual valuse include origin, material and mesh to make model look similar to real robot-->
+		<origin rpy="0 0 0" xyz="0 0 0" />
+		<geometry>
+			<mesh filename="package://p3dx_description/meshes/rplidar.dae" scale="1 1 1"/>
+		</geometry>
+		<material name="RPLidarBlack">
+			<color rgba="0.117 0.117 0.117 1" />
+		</material>
+		</visual>
+  </link>
+
+   <joint name="chassis_to_rplidar" type="fixed">
+     <axis xyz="0 0 0" />
+     <origin rpy="0 0 0" xyz="0.0 0.0 0.5" />
+     <parent link="chassis" />
+     <child link="rplidar" />
+   </joint>
