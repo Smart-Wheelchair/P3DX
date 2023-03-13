@@ -291,7 +291,7 @@ RosAriaNode::RosAriaNode(ros::NodeHandle nh) :
   // read in runtime parameters
 
   // port and baud
-  n.param( "port", serial_port, std::string("/dev/ttyUSB1") );
+  n.param( "port", serial_port, std::string("/dev/ttyUSB0") );
   ROS_INFO( "RosAria: set port: [%s]", serial_port.c_str() );
 
   n.param("baud", serial_baud, 0);
