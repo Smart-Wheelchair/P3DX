@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(p3dx_control)
+project(p3dx_teleop)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -68,6 +68,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+install(PROGRAMS
+src/robot_teleop_key
+DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+
 ## Declare a cpp library
 # add_library(p3dx_control
 #   src/${PROJECT_NAME}/p3dx_control.cpp
@@ -84,6 +90,3 @@ include_directories(
 # target_link_libraries(p3dx_control_node
 #   ${catkin_LIBRARIES}
 # )
-
-add_executable(mover mover.cpp)
-target_link_libraries(mover ${catkin_LIBRARIES})
