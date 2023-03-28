@@ -4,3 +4,5 @@ devel/*
 logs/*
 data/*
 .vscode/
+*.weights
+*.pt
