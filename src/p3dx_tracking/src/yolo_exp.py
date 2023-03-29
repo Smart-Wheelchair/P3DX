@@ -1,52 +1,53 @@
-# import torch
-
-# # Model
-# model = torch.hub.load("ultralytics/yolov5", "yolov5s")  # or yolov5n - yolov5x6, custom
-
-# # Images
-# img = "img/zidane.jpg"  # or file, Path, PIL, OpenCV, numpy, list
-
-# # Inference
-# results = model(img)
-
-# # Results
-# results.show()  # or .show(), .save(), .crop(), .pandas(), etc.
-
 import cv2
+import numpy as np
+import torch
+from motpy import Detection, MultiObjectTracker
 
-# Load video
-cap = cv2.VideoCapture('video.mp4')
+# Load YOLOv5 model
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
-# Get video FPS
+# create a multi object tracker with a specified step time of 100ms
+tracker = MultiObjectTracker(dt=0.1)
+
+# Open video file or capture device
+cap = cv2.VideoCapture('/home/luke/Desktop/uid_vid_00005.mp4')
 fps = int(cap.get(cv2.CAP_PROP_FPS))
-
-while True:
-    # Read frame
+# Process video frames
+while cap.isOpened():
     ret, frame = cap.read()
+    if not ret:
+        break
+    t1 = cv2.getTickCount()
+    # Perform object detection with YOLOv5
+    results = model(frame)
+
+    # Convert YOLOv5 detections to motpy detections
+    detections = []
+    for box in results.xyxy[0]:
+        box = box.cpu().numpy()
+        detections.append(Detection(box=[box[0], box[1], box[2]-box[0], box[3]-box[1]], score=box[4]))
+
+    # Update MOT tracker with detections
+    tracker.step(detections=detections)
+
+    # Retrieve active tracks from tracker
+    tracks = tracker.active_tracks()
+    cv2.putText(frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    # Draw bounding boxes and IDs on frame
+    for track in tracks:
+        bbox = track.box.astype(int)
+        cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[0]+bbox[2], bbox[1]+bbox[3]), (0, 255, 0), 2)
+        cv2.putText(frame, str(track.id), (bbox[0], bbox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     
-    if ret:
-        # Get current time
-        t1 = cv2.getTickCount()
-        
-        # Display FPS on frame
-        cv2.putText(frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        
-        # Display frame
-        cv2.imshow('frame', frame)
-        
-        # Get time elapsed
-        t2 = cv2.getTickCount()
-        time_elapsed = (t2 - t1) / cv2.getTickFrequency()
-        
-        # Calculate delay to maintain FPS
-        delay = max(1, int((1/fps - time_elapsed)*1000))
-        
-        # Wait for delay time or press 'q' to quit
-        if cv2.waitKey(delay) & 0xFF == ord('q'):
-            break
-    else:
+    # Get time elapsed
+    t2 = cv2.getTickCount() 
+    time_elapsed = (t2 - t1) / cv2.getTickFrequency()
+
+
+    # Show frame
+    cv2.imshow('frame', cv2.resize(frame, (frame.shape[1]//2, frame.shape[0]//2)))
+    if cv2.waitKey(1) == ord('q'):
         break
 
-# Release resources
 cap.release()
 cv2.destroyAllWindows()
