@@ -10,7 +10,7 @@ model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 tracker = MultiObjectTracker(dt=0.1)
 
 # Open video file or capture device
-cap = cv2.VideoCapture('/home/luke/Desktop/uid_vid_00005.mp4')
+cap = cv2.VideoCapture('/home/luke/Videos/uid_vid_00009.mp4')
 fps = int(cap.get(cv2.CAP_PROP_FPS))
 # Process video frames
 while cap.isOpened():

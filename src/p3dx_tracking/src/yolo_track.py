@@ -6,5 +6,5 @@ model = YOLO("yolov8n.pt")  # load an official detection model
 # model = YOLO("path/to/best.pt")  # load a custom model
 
 # Track with the model
-results = model.track("/home/luke/Desktop/uid_vid_00009.mp4", show=True, tracker="bytetrack.yaml") 
+results = model.track("/home/luke/Videos/uid_vid_00009.mp4", show=True, tracker="bytetrack.yaml") 
 # results = model.track(source="https://youtu.be/Zgi9g1ksQHc", show=True, tracker="bytetrack.yaml") 
