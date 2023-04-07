@@ -1,9 +1,20 @@
 # Pioneer P3-DX Model
 
-A ROS/Gazebo Pioneer 3DX model created by Rafael Berkvens (rafael.berkvens@uantwerpen.be) and modified by Mario Serna Hernández. This is a model adapted to the Pioneer P3-DX robot of the Movis Research & Innovation Group.
+A ROS/Gazebo Pioneer 3DX model. This is a model adapted to the Pioneer P3-DX robot of the Movis Research & Innovation Group.
 
 # Source repository:
 https://github.com/SD-Robot-Vision/PioneerModel.git
+
+# To Run and collect data 
+
+1. roscore
+2. sudo chmod +777 /dev/ttyUSB0 
+3. rosrun rosaria RosAria
+4. roslaunch realsense2_camera rs_camera.launch align_depth:=true enable_pointcloud:=true (to get pointcloud from RGBD)
+5. rosbag record -e "/camera/aligned_depth_to_color/image_raw" "/camera/color/image_raw" "/RosAria/pose" "/camera/depth/image_rect_raw" 
+
+
+
 
 # To install:
 ```
