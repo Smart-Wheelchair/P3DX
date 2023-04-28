@@ -14,9 +14,9 @@ folder_name = "data_p3dx_vlmaps"
 
 IMAGE_PATH = os.path.join(path, folder_name, "rgb")
 ALIGNED_DEPTH_PATH = os.path.join(path, folder_name, "aligned_depth")
-VISUAL_ODOM_PATH = os.path.join(path, folder_name, "visual_odom")
+# VISUAL_ODOM_PATH = os.path.join(path, folder_name, "visual_odom")
 ODOM_PATH = os.path.join(path, folder_name, "odom")
-DEPTH_PATH = os.path.join(path, folder_name, "depth")
+# DEPTH_PATH = os.path.join(path, folder_name, "depth")
 
 NUM = 0
 FACTOR = 1

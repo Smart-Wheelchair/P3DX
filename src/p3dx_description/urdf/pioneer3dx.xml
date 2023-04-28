@@ -25,9 +25,6 @@ work original in ucs-ros-pkg.
  -->
 <robot name="pioneer3dx" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- import all gazebo-customization elements, including gazebo colors -->
-
-  <xacro:include filename="$(find p3dx_description)/urdf/_d435.xacro" />
-
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
       <robotNamespace>/p3dx</robotNamespace>
@@ -64,8 +61,8 @@ work original in ucs-ros-pkg.
       <wheelSeparation>0.39</wheelSeparation>
       <wheelDiameter>0.15</wheelDiameter>
       <torque>5</torque>
-      <commandTopic>p3dx/cmd_vel</commandTopic>
-      <odometryTopic>p3dx/odom</odometryTopic>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_link</robotBaseFrame>
     </plugin>
@@ -444,11 +441,6 @@ work original in ucs-ros-pkg.
     <parent link="base_link"/>
     <child link="front_sonar"/>
   </joint>
-
-  	<xacro:sensor_d435 parent="base_link">
-      <origin xyz="-0.23 0 0.860" rpy="0 3.14 1.57"/>
-    </xacro:sensor_d435>
-
   <!-- lms100 laser -->
   <link name="lms100">
     <inertial>

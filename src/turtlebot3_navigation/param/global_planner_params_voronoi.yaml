@@ -1,5 +1,0 @@
-VoronoiPlanner:
-  publish_voronoi_grid: true
-  smooth_path: true
-  weight_data: 0.5
-  weight_smooth: 0.3
